@@ -1,3 +1,7 @@
+library(dplyr)
+library(readr)
+library(tidyr)
+
 # https://www2.census.gov/geo/docs/reference/state.txt?#
 statefips <- read_delim(
   "/Users/selahmitchell/Downloads/state.txt",
