@@ -64,7 +64,21 @@ print(head(countynames))
 
 average_temp_data <- climdiv_county %>%
   left_join(countynames, by = "fips") %>%
-  select(year, fips, month, temp, County_Name, State)  # Select relevant columns
+  select(year, fips, month, temp, County_Name, State) %>% 
+  mutate("Region" = ifelse(State %in% c('Connecticut', 'Maine', 'Massachusetts', 
+                                        'New Hampshire', 'Rhode Island', 'Vermont', 
+                                        'New Jersey', 'New York', 'Pennsylvania'), "Northeast", 
+                           ifelse(State %in% c('Indiana', 'Illinois', 'Michigan', 'Ohio', 
+                                               'Wisconsin', 'Iowa', 'Kansas', 'Minnesota', 
+                                               'Missouri', 'Nebraska', 'North Dakota', 'South Dakota'), "Midwest", 
+                                  ifelse(State %in% c('Delaware', 'District of Columbia', 'Florida',
+                                                      'Georgia', 'North Carolina', 'South Carolina', 'Virginia', 
+                                                      'West Virginia', 'Alabama', 'Kentucky', 'Mississippi', 
+                                                      'Tennessee', 'Arkansas', 'Louisiana', 'Oklahoma', 'Texas'), "South", 
+                                         "West"
+         )
+     )
+)) # Select relevant columns
 # Print the combined data to check
 print(tail(average_temp_data))
 
