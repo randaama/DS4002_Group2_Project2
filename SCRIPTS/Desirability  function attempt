@@ -1,0 +1,45 @@
+
+import pandas as pd
+import numpy as np
+
+
+filtered_clim = top10counties
+
+# Calculate average temperature and precipitation for each month
+monthly_averages = filtered_clim.groupby('month').agg({'temp': 'mean', 'precip': 'mean'}).reset_index()
+monthly_averages.columns = ['month', 'Monthly_Avg_Temp', 'Monthly_Avg_Precip']
+
+# Merge the monthly averages back into the original DataFrame
+filtered_clim = filtered_clim.merge(monthly_averages, on='month')
+
+# Normalize the temperature and precipitation by month
+filtered_clim['Normalized_Temp'] = (filtered_clim['temp'] - filtered_clim['Monthly_Avg_Temp']) / filtered_clim['Monthly_Avg_Temp']
+filtered_clim['Normalized_Precip'] = (filtered_clim['precip'] - filtered_clim['Monthly_Avg_Precip']) / filtered_clim['Monthly_Avg_Precip']
+
+# Function to calculate desirability scores
+def calculate_scores(w_temp, w_precip):
+    filtered_clim['Desirability_Score'] = (w_temp * filtered_clim['Normalized_Temp']) + (w_precip * filtered_clim['Normalized_Precip'])
+    return filtered_clim[['County_Name', 'month', 'Desirability_Score']]
+
+# Function to find the best weights
+def find_best_weights(desired_ranking):
+    best_score = float('-inf')
+    best_weights = (0.5, 0.5)  # Start with equal weights
+    for w_temp in np.arange(0.0, 1.1, 0.1):
+        w_precip = 1 - w_temp
+        scores = calculate_scores(w_temp, w_precip)
+        ranked_locations = scores.groupby('County_Name')['Desirability_Score'].mean().sort_values(ascending=False).index.tolist()
+        current_score = sum([1 for loc in desired_ranking if loc in ranked_locations[:len(desired_ranking)]])
+        if current_score > best_score:
+            best_score = current_score
+            best_weights = (w_temp, w_precip)
+
+    return best_weights
+
+# Find best weights
+optimal_weights = find_best_weights(desired_ranking)
+print(f"Optimal Weights: Temperature: {optimal_weights[0]:.2f}, Precipitation: {optimal_weights[1]:.2f}")
+
+# Final scores with optimal weights
+final_scores = calculate_scores(optimal_weights[0], optimal_weights[1])
+print(final_scores)
