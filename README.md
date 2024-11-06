@@ -34,7 +34,7 @@ In order to reproduce the results of this study, first read and follow the instr
 # References
 
 [1] A. McCann, “Best & Worst Places to Retire in 2024,” WalletHub, Sep. 03, 2024. https://wallethub.com/edu/best-places-to-retire/6165 (accessed Oct. 12, 2024).
-‌
-[2] “Index of /pub/data/cirs/climdiv,” www.ncei.noaa.gov. https://www.ncei.noaa.gov/pub/data/cirs/climdiv/ (accessed Oct. 2024)
+
+‌[2] “Index of /pub/data/cirs/climdiv,” www.ncei.noaa.gov. https://www.ncei.noaa.gov/pub/data/cirs/climdiv/ (accessed Oct. 2024)
 
 [3] washingtonpost, “Climate change in the contiguous United States,” GitHub, Jul. 24, 2022. https://github.com/washingtonpost/data-2C-beyond-the-limit-usa/
