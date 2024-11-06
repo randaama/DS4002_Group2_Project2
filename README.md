@@ -14,7 +14,7 @@ This projected was completed using the R and python programming languages. For R
 Contents of this repository include:
 
 - README.md: a file containing all information about the files within the repository
-- LICENSE.md: a file citing the terms under which this repository may be used and cited
+- LICENSE: a file citing the terms under which this repository may be used and cited
 - DATA folder: a folder containing the following 7 files
   - Data Appendix: a file describing the final dataset and its variables
   - Data Acquisition.pdf: a pdf file detailing how to obtain and clean the data
